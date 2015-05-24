@@ -108,9 +108,9 @@ class Lista:
 		
 	#Evento 3 pasar agua del jarro2 al jarro1
 	def Evento3(self):
-		print "LJ1 es ",self.LJ1
-		print "AJ1 es ",self.AJ1
-		print "LJ2 es ",self.LJ2
+		#print "LJ1 es ",self.LJ1
+		#print "LJ2 es ",self.LJ2
+		#print "========= "
 		if self.LJ2>0 and self.LJ1 < self.AJ1:
 			self.LJ2 = self.LJ2 -1
 			self.LJ1 = self.LJ1 + 1
@@ -118,10 +118,26 @@ class Lista:
 		else:
 			self.Insertar(self.LJ1, self.LJ2, self.AMet)
 
+	#Evento 4 pasar agua del jarro1 al jarro2
+	def Evento4(self):
+		print "LJ1 es ",self.LJ1
+		print "LJ2 es ",self.LJ2
+		print "======"
+		if self.LJ1>0 and self.LJ2 < self.AJ2:
+			self.LJ1 = self.LJ1 - 1
+			self.LJ2 = self.LJ2 + 1
+			self.Evento4()
+		else:
+			self.Insertar(self.LJ1, self.LJ2, self.AMet)
+	
 	#Evento 5 vaciar el jarro 1
 	def Evento5(self):
-
 		self.LJ1=0
+		self.Insertar(self.LJ1, self.LJ2, self.AMet)
+
+	#Evento 6 vaciar el jarro 2
+	def Evento6(self):
+		self.LJ2=0
 		self.Insertar(self.LJ1, self.LJ2, self.AMet)
 
 	#nos dice si llego a la meta
@@ -140,6 +156,8 @@ class Lista:
 		self.Evento2()
 		self.Evento5()
 		self.Evento3()
+		self.Evento4()
+		self.Evento6()
 
 listas = Lista()
 ja1 = 5 # capacidad que tiene  el jarro 1
