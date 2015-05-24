@@ -14,8 +14,13 @@ class Lista:
 	def __init__(self):
 		self.cabeza=None
 		self.cola=None
-		self.LJ1=0
-		self.LJ2=0
+		self.LJ1=0 #litros de agua que tiene el jarro1
+		self.LJ2=0 #litros de agua que tiene el jarro2
+		
+		self.AJ1=None #Auxiliar Jarro 1
+		self.AJ2=None #Auxiliar Jarro 2
+		self.AMet = None #Auxiliar para la meta
+
 	#variables
 	def variables():
 		self.LJ1=0
@@ -28,8 +33,13 @@ class Lista:
 		else:
 			return False
 
-	def InsertarPrimero(self,J1,J2,Meta):
-		temporal=Nodo(J1,J2,Meta)
+	def Insertar(self,J1,J2,Meta):
+		self.AJ1= J1
+		self.AJ2= J2
+		self.AMet = Meta
+
+		temporal=Nodo(self.LJ1, self.LJ2, self.AMet)
+
 		if self.vacia()==True:
 			self.cabeza=temporal
 			self.cola=temporal
@@ -39,14 +49,14 @@ class Lista:
 			self.cabeza=temporal
 
 	def listar(self):
-		print("**********")
+		print("*****Listar*****")
 		temporal=self.cabeza
 		while temporal != None:
 			print(temporal.verNodo())
 			temporal= temporal.siguiente
 
 	def listarDesdeCola(self):
-		print("*********")
+		print("****Listar*****")
 		temporal=self.cola
 		while temporal != None:
 			print(temporal.verNodo())
@@ -66,9 +76,9 @@ class Lista:
 			self.cola.siguiente=None
 	#pasar agua del jarro1 al jarro2
 	def J1aJ2(self):
-		print "poraqui", self.LJ2
-		print "poraqui", self.LJ1
-		self.nuevo()
+		print "Litros agua jarra 1 es :", self.LJ1
+		print "Litros agua jarra 2 es :", self.LJ2
+		self.Evento1()
 		#if self.LJ1>0 and self.LJ2 < J2:
 		#	print "Aqui"
 			#LJ1 is LJ1 -1
@@ -80,14 +90,20 @@ class Lista:
 			LJ2 is LJ2 -1
 			LJ1 is LJ1 + 1
 			J2aJ1()
-	#nuecos estados
-	def Nuevo(self):
-		print ("llego aca")
-		if self.LJ1 == 0 :
-			self.LJ1 is J1
-			#print ("tiene 0")
-		else:
-			print ("estaba lleno el jarro 1")
+	
+	#Evento 1 llenar jarro 1
+	def Evento1(self):
+		self.LJ1 = self.AJ1
+		print "******El jarro 1 tiene", self.AJ1, "Litros."
+		self.Insertar(self.AJ1, self.AJ2, self.AMet)
+
+	#Evento 2 llenar jarro 2
+	def Evento2(self):
+		self.LJ2 = self.AJ2
+		print "******El jarro 2 tiene", self.AJ2, "Litros."
+		self.Insertar(self.AJ1, self.AJ2, self.AMet)
+		
+
 	#nos dice si llego a la meta
 	def FunMeta(self,Meta):
 		if self.LJ1+self.LJ2 == Meta:
@@ -95,18 +111,20 @@ class Lista:
 		else:
 			return False
 	#nos regresa un nuevo estado
-	def estado(self):
-		self.J1aJ2()#que llene de jarro 1 a jarro 2
+	def CrearEstado(self):
+		self.Evento1()#que llene de jarro 1
+		self.Evento2()#que llene el jarro2
 		
 listas = Lista()
 ja1 = 5 # capacidad que tiene  el jarro 1
 ja2 = 3 # capacidad que tiene  el jarro 2
-meta = 1 #metalitros agua
-listas.InsertarPrimero(ja1,ja2,meta)
-listas.listarDesdeCola()
+meta = 1 #meta litros agua
+listas.Insertar(ja1,ja2,meta)
+
 if True == listas.FunMeta(meta):
-	print ("llego a la meta")
+	print ("llego a la meta.. ya no haga mas hijos")
 else:
-	listas.estado()
+	listas.CrearEstado()
+listas.listarDesdeCola()
 #listas.Nuevo()
 
