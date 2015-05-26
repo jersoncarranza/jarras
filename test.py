@@ -162,7 +162,7 @@ class Lista:
 listas = Lista()
 ja1 = 5 # capacidad que tiene  el jarro 1
 ja2 = 3 # capacidad que tiene  el jarro 2
-meta = 5 #meta litros agua
+meta= 5 #meta litros agua
 
 listas.UtiAux(ja1,ja2,meta)
 #listas.Insertar(ja1,ja2,meta)
