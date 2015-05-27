@@ -1,4 +1,5 @@
 class Arbol:
+
 	def __init__(self,valor):
 		self.valor = valor
 		self.izquierda = None
@@ -34,6 +35,17 @@ class Arbol:
 		else:
 			return self.valor
 
+	#Metodo que nos permite buscar un elemento en forma recursiva
+	def BuscaNodoD(self,dato):
+		if self.valor != dato:
+			if self.derecha!=None:
+				return self.derecha.BuscaNodoD(dato)
+			if self.izquierda!=None:
+				return self.izquierda.BuscaNodoD(dato)
+		else:
+			return self.valor
+
+
 	#Metodo para impresion del arbol comenzando Primero Izquierda usando recursividad
 	def ImprimeArbolIzq(self):
 		if self.valor!=None:
@@ -54,13 +66,15 @@ class Arbol:
 arbol= Arbol(9)
 # AgregaIzquierda(padre,dato)
 arbol.AgregaIzquierda(9,23)
-arbol.AgregaIzquierda(23,64)
-arbol.AgregaIzquierda(64,7)
-arbol.AgregaDerecha(64,44)
-arbol.AgregaDerecha(9,61)
-arbol.AgregaDerecha(61,81)
-arbol.AgregaIzquierda(81,26)
-arbol.AgregaDerecha(26,55)
+
+arbol.AgregaIzquierda(23,230)
+
+arbol.AgregaIzquierda(230,830)
+arbol.AgregaDerecha(230,431)
+
+
+
+
 
 print
 print 'Impresion del arbol comenzando por la izquierda'
@@ -71,6 +85,6 @@ print 'Impresion del arbol comenzando por la derecha'
 arbol.ImprimeArbolDer()
 
 print 'Buscando un valor' 
-valor = arbol.BuscaNodo(7)
+valor = arbol.BuscaNodo(431)
 print valor
 print

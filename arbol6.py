@@ -4,6 +4,7 @@ class Arbol:
 		self.evento1 = None
 		self.evento2 = None
 		self.evento3 = None
+		self.bandera = 0 #Bandera para que busque
 
 
 #Metodo para agregar nodos a la evento1 del arbol, no importando que nodo
@@ -44,16 +45,23 @@ class Arbol:
 			self.evento3 = Arbol(dato)
 	#Metodo que nos permite buscar un elemento en forma recursiva
 	def BuscaNodo(self,dato):
-		if self.valor != dato:
-			if self.evento1!=None:
-				return self.evento1.BuscaNodo(dato)
-			if self.evento2!=None:
-				return self.evento2.BuscaNodo(dato)
-			if self.evento3!=None:
-				return self.evento3.BuscaNodo(dato)
-		else:
+		dato= 35
+		print "valorrrr", self.valor
+		if self.valor == dato:
+			print "ya encontro"
 			return self.valor
+		else:
+			if self.evento1 !=None:
+				return self.evento1.BuscaNodo(dato)
 
+			if self.evento2!=None:
+				print "entro al evento2", self.valor
+				return self.evento2.BuscaNodo(dato)
+
+			if self.evento3!=None:
+				print "....", self.valor
+				return self.evento3.BuscaNodo(dato)
+			
 #Metodo para impresion del arbol comenzando Primero evento1 usando recursividad
 	def ImprimeEvento1(self):
 		if self.valor!=None:
@@ -87,15 +95,16 @@ class Arbol:
 
 arbol= Arbol(9)
 #arbol.AgregaEvento1(9,23)
-arbol.AgregaEvento1(9,24)
+arbol.AgregaEvento1(9,35)
 arbol.AgregaEvento2(9,28)
-arbol.AgregaEvento3(9,29)
+arbol.AgregaEvento3(9,19)
 
 #print 'Impresion del arbol comenzando por la evento1'
 #arbol.ImprimeEvento1()
-print 'Impresion del arbol comenzando por la evento2'
+
 arbol.ImprimeEvento3()
 
-print 'Buscando un valor' 
-valor = arbol.BuscaNodo(28)
-print valor
+vb = 35
+#print 'Buscando un valor',vb
+valor = arbol.BuscaNodo(vb)
+print  valor
