@@ -1,30 +1,21 @@
 class Arbol:
-    def __init__(self,raiz):
-        self.raiz = raiz
-        self.hijo1 = None
-        self.hijo2 = None
+    def __init__ (self, J1, J2, Meta):
+        self.siguiente = None
+        self.anterior = None
+        self.raiz = [J1,J2,Meta]
 
-    def Agregahijo1(self,padre,dato):
-        if self.raiz != padre:
-            if self.hijo1 !=None:
-                self.hijo1.Agregahijo1(padre,dato)                                                                                                                                                                                                           
-            if self.hijo2 !=None:
-                self.hijo2.Agregahijo1(padre,dato)
-        else: 
-            self.hijo1=Arbol(dato)
+    def Raiz(self):
+        return self.raiz
 
-    #Metodo para impresion del arbol comenzando Primero evento1 usando recursividad
-    def ImprimeArbol(self):
-        print "arbol"
-        if self.raiz!=None:
-            print self.raiz
-            if self.hijo1!=None:
-                self.hijo1.ImprimeArbol()
-            if self.hijo2!=None:
-                self.hijo2.ImprimeArbol()
+    def crearArbol(self):
+        J1= self.raiz[0]
+        J2= self.raiz[1]
+        Meta= self.raiz[2]
+        
+        NA=NodoArbol(J1,J2,Meta)
+        NA.crearHijos()
 
-
-class Nodo:
+class NodoArbol:
     def __init__ (self,J1,J2,Meta):
         self.siguiente = None
         self.anterior = None
@@ -35,16 +26,23 @@ class Nodo:
         return self.datos
 
 
+    def crearHijos(self):
+        print "Los datos NodoArbol:", self.datos
+        Li=Lista(J1,J2,Meta)
+        Li.CrearEstado()
+        Li.listar()
+
 class Lista:
-    def __init__(self):
+    def __init__(self,J1,J2,Meta):
+        self.aux = None
         self.cabeza=None
         self.cola=None
         self.LJ1=0 #litros de agua que tiene el jarro1
         self.LJ2=0 #litros de agua que tiene el jarro2
         
-        self.AJ1=None #Auxiliar Jarro 1
-        self.AJ2=None #Auxiliar Jarro 2
-        self.AMet = None #Auxiliar para la meta
+        self.AJ1=J1 #Auxiliar Jarro 1
+        self.AJ2=J2 #Auxiliar Jarro 2
+        self.AMet = Meta #Auxiliar para la meta
 
     def vacia(self):
         if self.cabeza==None:
@@ -97,25 +95,26 @@ class Lista:
         #Genera el primer estado 
         self.Insertar(0,0,self.AMet)
 
-    def Insertar(self,J1,J2,Meta):
-        self.LJ1= J1
-        self.LJ2= J2
-        self.AMet = Meta
-        temporal=Nodo(self.LJ1, self.LJ2, self.AMet)
-
+    def Insertar(self,PJ1,PJ2,Meta):
+        self.LJ1= PJ1
+        self.LJ2= PJ2
+        temporal=NodoArbol(self.LJ1, self.LJ2, self.AMet)
         if self.vacia()==True:
             self.cabeza=temporal
             self.cola=temporal
+            self.aux = self.cabeza
+            print "cc", self.cabeza[1]
         else:
-            temporal.siguiente=self.cabeza
-            self.cabeza.anterior=temporal
-            self.cabeza=temporal
+            self.aux.siguiente = temporal
+            self.aux = temporal
+            #temporal.siguiente=self.cabeza
+            #self.cabeza.anterior=temporal
+            #self.cabeza=temporal
 
     #Evento 1 llenar jarro 1
     def Evento1(self):
-        print "LJ1" , self.LJ1
-        print "AJ1", self.AJ1
         self.LJ1 = self.AJ1
+        print "Litros jarro1" , self.LJ1 , "Litros jarro2" , self.LJ2
         self.Insertar(self.LJ1, self.LJ2, self.AMet)
 
     #Evento 2 llenar jarro 2
@@ -164,31 +163,16 @@ class Lista:
     def CrearEstado(self):
         self.Evento1()
         self.Evento2()
-        self.Evento5()
-        self.Evento3()
-        self.Evento4()
-        self.Evento6()
-
-listas = Lista()
-ja1 = 5 # capacidad que tiene  el jarro 1
-ja2 = 3 # capacidad que tiene  el jarro 2
-meta= 7 #meta litros agua
-
-listas.CrearPrimerEstado(ja1,ja2,meta)
-raiz=listas.retornar()
-arbol= Arbol(raiz)
-
-listas.Evento1()
-listas.listarDesdeCola()
-
-hijo1=listas.retornar()
-print "el primer hijo1", hijo1
-arbol.Agregahijo1(raiz,hijo1)
-arbol.ImprimeArbol()
+        #self.Evento5()
+        #self.Evento3()
+        #self.Evento4()
+        #self.Evento6()
 
 
+J1 = 5 # capacidad que tiene  el jarro 1
+J2 = 3 # capacidad que tiene  el jarro 2
+Meta= 7 #Meta litros agua
+arb = Arbol(J1,J2,Meta)
+#arb.PrimerInsertar(J1,J2,Meta)
+arb.crearArbol()
 
-#if True == listas.FunMeta(meta):
-#    print ("llego a la meta.. ya no haga mas hijos")
-#else:
-    #listas.CrearEstado()

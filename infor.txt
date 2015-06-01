@@ -1,0 +1,32 @@
+Clase estado
+	Lj1
+	lj2
+
+	Constructutor
+	destrutuctor
+	set
+	get
+
+Clase nodo: arbol
+	Info: estado
+	Hijos listas
+	Padre:
+	//punetro de nodo arbol
+	//manda a crear los hijos 
+
+	para crear mas hijos
+	que sea meta
+	que no sea prohibodo
+	que no sea repetido
+	que sea posible
+
+
+	Crear hijos//toma informacion del estado y lo guarda en una lista
+
+Clase arbol
+	raiz
+
+	crear Raiz
+	crear arbol//va crear raiz y los hijos  VA REVISAR
+	ENTREGAR LISTAS// REVISAR
+	devolver solucion
