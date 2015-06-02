@@ -32,6 +32,7 @@ class NodoArbol:
         Li.CrearEstado()
         #Li.listar()
 
+
 class Lista:
     def __init__(self,J1,J2,Meta):
         self.aux = None
@@ -40,6 +41,8 @@ class Lista:
         self.cola=None
         self.LJ1=0 #litros de agua que tiene el jarro1
         self.LJ2=0 #litros de agua que tiene el jarro2
+
+        self.NodoSolucion = None
         
         self.AJ1=J1 #Auxiliar Jarro 1
         self.AJ2=J2 #Auxiliar Jarro 2
@@ -59,20 +62,39 @@ class Lista:
             print(temporal.verNodo())
             temporal= temporal.siguiente
 
-    def listarDesdeCola(self):
-        print("****Listar desde cola*****")
-        temporal=self.cola
+    def listarSolucion(self):
+        #print "hola 0 --> ", self.NodoSolucion
+
+        print "hola 1-- > " ,self.NodoSolucion
+        temporal = self.padre
+
         while temporal != None:
-            print(temporal.verNodo())
-            temporal = temporal.anterior
+            print "hola 1-- > ", temporal.verNodo()
+            temporal = temporal.ptrPadre
+
+            
+        #    pass
+        #print "hola 2-- > ", temporal.verNodo()
+
+        #temporal = self.padre.ptrPadre.ptrPadre
+        #print "hola 3-- > ", temporal.verNodo()
+
+        #nueva = temporal.padre
+        #print "hola 3-- > ", nueva.verNodo()
+
+
+        #nueva = self.padre.verNodo()
+        #print "ho-- > ", nueva
+
+        #temporal=self.NodoSolucion
+        #while temporal != None:
+         #   print(temporal.verNodo())
+         #   temporal = temporal.ptrPadre
     #retornar
     def retornar(self):
-        print("****retornar*****")
-        temporal=self.cola
-        while temporal != None:
-            return temporal.verNodo()
-            temporal = temporal.anterior
-            #return temporal
+        print("****Retornar Solucion *****")
+        temporal=self.NodoSolucion
+        print(temporal.verNodo())
 
     def borrarPrimero(self):
         if self.vacia()==False:
@@ -102,7 +124,7 @@ class Lista:
         temporal=NodoArbol(PJ1, PJ2 , self.AMet)
         if self.vacia()==True:
             self.cabeza=temporal
-            self.cola=temporal
+            #self.cola=temporal
             self.aux = self.cabeza
             self.padre = self.cabeza
         else:
@@ -115,20 +137,16 @@ class Lista:
         if LJ1 != self.AJ1:
             LJ1 = self.AJ1
             self.Insertar(LJ1, LJ2, self.AMet)
-        else:
-            print "No se pudo insertar 1 Evento"
-
+        
     #Evento 2 llenar jarro 2
     def Evento2(self, LJ1, LJ2):
         if LJ2 != self.AJ2:
             LJ2 = self.AJ2
             self.Insertar(LJ1, LJ2, self.AMet)
-        else:
-            print "No se pudo insertar 2 Evento"
         
     #Evento 3 pasar agua del jarro2 -->al jarro1
     def Evento3(self, LJ1, LJ2):
-        print LJ1, LJ2, self.AJ1        
+        #print LJ1, LJ2, self.AJ1        
         if LJ2>0 and LJ1 < self.AJ1:
             LJ2 = LJ2 -1
             LJ1 = LJ1 + 1
@@ -138,9 +156,7 @@ class Lista:
             if self.ban > 0:
                 self.ban = 0
                 self.Insertar(LJ1, LJ2, self.AMet)
-            else:
-                print "no se inserto 3 Evento"
-
+            
     #Evento 4 pasar agua del jarro1 al jarro2
     def Evento4(self, LJ1, LJ2):
         if LJ1>0 and LJ2 < self.AJ2:
@@ -152,25 +168,19 @@ class Lista:
             if self.ban > 0:
                 self.ban = 0
                 self.Insertar(LJ1, LJ2, self.AMet)
-            else:
-                print "no se inserto 4 Evento"
-    
+            
     #Evento 5 vaciar el jarro 1
     def Evento5(self, LJ1, LJ2):
         if LJ1 > 0:
             LJ1=0
             self.Insertar(LJ1, LJ2, self.AMet)
-        else:
-            print "no se inserto 5 Evento"
-
+        
     #Evento 6 vaciar el jarro 2
     def Evento6(self,  LJ1, LJ2):
         if LJ2 > 0:
             LJ2=0
             self.Insertar(LJ1, LJ2, self.AMet)
-        else:
-            print "no se inserto 6 Evento"
-
+        
     #nos dice si llego a la meta
     def FunMeta(self,Meta):
         if self.LJ1+self.LJ2 == Meta:
@@ -178,20 +188,23 @@ class Lista:
         else:
             return False
     #nos regresa un nuevo estado
-    def CrearEstado(self):
-        
+    def CrearEstado(self):        
         if self.cabeza == None:
             self.Insertar(self.LJ1, self.LJ2, self.AMet)
+        else:
+            self.padre= self.padre.siguiente
+            
 
-        temporal=self.padre
-        while temporal != None:
-            temporal2 =temporal.verNodo()
-            temporal= temporal.siguiente
-            #ver = (temporal.verNodo())
+        #temporal=self.padre
+        #while temporal != None:
+            #temporal2 =temporal.verNodo()
+            #temporal= temporal.siguiente
+        temporal = self.padre.verNodo()
+        #print "El padre 0", temporal
 
-        J1 = temporal2[0]
-        J2 = temporal2[1]
-        Meta = temporal2[2]
+        J1 = temporal[0]
+        J2 = temporal[1]
+        Meta = temporal[2]
 
         self.Evento1(J1,J2)
         self.Evento2(J1,J2)
@@ -199,26 +212,35 @@ class Lista:
         self.Evento4(J1,J2)
         self.Evento5(J1,J2)
         self.Evento6(J1,J2)
-
-        print("------Listar-----")
+        #print("------Buscar la Meta -----")
         temporal=self.cabeza
         while temporal != None:
-            ver = (temporal.verNodo())
-            resultado = ver[0] + ver[1]
-            if resultado == self.AMet:
-                print "Encontro la Meta"
+            self.NodoSolucion = (temporal.verNodo())
+            respuesta = self.NodoSolucion[0] + self.NodoSolucion[1]
+            if respuesta == self.AMet:
+                #print "nodo Solucion ----- >", self.NodoSolucion
+                self.listarSolucion()
+                #self.listar()
+
                 exit()
             else:
                 temporal= temporal.siguiente
 
+        self.CrearEstado()
+        #print("------No La Encontro hara mas hijos -----")
+        #temporal = self.padre.verNodo()
+        #print "El padre 1:", temporal
 
-
-
+        #self.padre = self.padre.siguiente
+        #temporal = self.padre.verNodo()
+        #print "El padre 2:", temporal
 
 J1 = 5 # capacidad que tiene  el jarro 1
 J2 = 3 # capacidad que tiene  el jarro 2
-Meta= 1 #Meta litros agua
+Meta= 2 #Meta litros agua
 arb = Arbol(J1,J2,Meta)
 #arb.PrimerInsertar(J1,J2,Meta)
 arb.crearArbol()
+
+#creado por jerson carranza
 
