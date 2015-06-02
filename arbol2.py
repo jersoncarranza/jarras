@@ -4,6 +4,8 @@ class Arbol:
         self.anterior = None
         self.raiz = [J1,J2,Meta]
 
+        #self.respuesta=[J1,J2,Meta]
+
     def Raiz(self):
         return self.raiz
 
@@ -15,9 +17,12 @@ class Arbol:
         NA=NodoArbol(J1,J2,Meta)
         NA.crearHijos()
 
-    def solucion():
-        Li=Lista(J1,J2,Meta)
-        Li.listarSolucion()
+    def Solucion(self):
+        Li=Lista(self.raiz[0],self.raiz[1],self.raiz[2])
+        ver=Li.respuesta
+        print ver
+
+
 
 class NodoArbol:
     def __init__ (self,J1,J2,Meta):
@@ -36,7 +41,6 @@ class NodoArbol:
         Li.CrearEstado()
         #Li.listar()
 
-
 class Lista:
     def __init__(self,J1,J2,Meta):
         self.aux = None
@@ -47,6 +51,7 @@ class Lista:
         self.LJ2=0 #litros de agua que tiene el jarro2
 
         self.NodoSolucion = None
+        self.respuesta=None
         
         self.AJ1=J1 #Auxiliar Jarro 1
         self.AJ2=J2 #Auxiliar Jarro 2
@@ -54,6 +59,7 @@ class Lista:
 
         self.ban=0
         self.ban2=0
+    
     def vacia(self):
         if self.cabeza==None:
             return True
@@ -68,14 +74,22 @@ class Lista:
             temporal= temporal.siguiente
 
     def listarSolucion(self):
-        #print "hola 0 --> ", self.NodoSolucion
-
-        print "hola 1-- > " ,self.NodoSolucion
+        #print "hola 1-- > " ,self.NodoSolucion
+        self.respuesta=self.NodoSolucion[0],self.NodoSolucion[1]
+        print "es", self.respuesta
+        
         temporal = self.padre
 
+
         while temporal != None:
-            print "hola 1-- > ", temporal.verNodo()
+            #print "hola 1-- > ", temporal.verNodo()
+            aux = temporal.verNodo()
+            self.respuesta=aux[0],aux[1]
             temporal = temporal.ptrPadre
+            #self.respuesta=temporal
+            print "es", self.respuesta
+        
+
 
             
         #    pass
@@ -249,6 +263,10 @@ Meta= 3 #Meta litros agua
 arb = Arbol(J1,J2,Meta)
 #arb.PrimerInsertar(J1,J2,Meta)
 arb.crearArbol()
+arb.Solucion()
 
+
+
+#arb.Solucion()
 #creado por jerson carranza
 
