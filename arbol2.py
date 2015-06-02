@@ -20,7 +20,7 @@ class Arbol:
     def Solucion(self):
         Li=Lista(self.raiz[0],self.raiz[1],self.raiz[2])
         ver=Li.respuesta
-        print ver
+        return ver
 
 
 
@@ -76,22 +76,17 @@ class Lista:
     def listarSolucion(self):
         #print "hola 1-- > " ,self.NodoSolucion
         self.respuesta=self.NodoSolucion[0],self.NodoSolucion[1]
-        print "es", self.respuesta
+        print self.respuesta
         
         temporal = self.padre
-
-
         while temporal != None:
             #print "hola 1-- > ", temporal.verNodo()
             aux = temporal.verNodo()
             self.respuesta=aux[0],aux[1]
             temporal = temporal.ptrPadre
             #self.respuesta=temporal
-            print "es", self.respuesta
+            print self.respuesta
         
-
-
-            
         #    pass
         #print "hola 2-- > ", temporal.verNodo()
 
@@ -258,12 +253,13 @@ class Lista:
         #    print "chao !!"
 
 J1 = 5 # capacidad que tiene  el jarro 1
-J2 = 4 # capacidad que tiene  el jarro 2
-Meta= 3 #Meta litros agua
+J2 = 3 # capacidad que tiene  el jarro 2
+Meta= 2 #Meta litros agua
 arb = Arbol(J1,J2,Meta)
 #arb.PrimerInsertar(J1,J2,Meta)
 arb.crearArbol()
-arb.Solucion()
+ver=arb.Solucion()
+print ver
 
 
 
