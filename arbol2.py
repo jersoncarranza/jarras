@@ -15,6 +15,10 @@ class Arbol:
         NA=NodoArbol(J1,J2,Meta)
         NA.crearHijos()
 
+    def solucion():
+        Li=Lista(J1,J2,Meta)
+        Li.listarSolucion()
+
 class NodoArbol:
     def __init__ (self,J1,J2,Meta):
         self.siguiente = None
@@ -49,6 +53,7 @@ class Lista:
         self.AMet = Meta #Auxiliar para la meta
 
         self.ban=0
+        self.ban2=0
     def vacia(self):
         if self.cabeza==None:
             return True
@@ -188,56 +193,59 @@ class Lista:
         else:
             return False
     #nos regresa un nuevo estado
-    def CrearEstado(self):        
-        if self.cabeza == None:
-            self.Insertar(self.LJ1, self.LJ2, self.AMet)
-        else:
-            self.padre= self.padre.siguiente
-            
+    def CrearEstado(self):
 
-        #temporal=self.padre
-        #while temporal != None:
-            #temporal2 =temporal.verNodo()
-            #temporal= temporal.siguiente
-        temporal = self.padre.verNodo()
-        #print "El padre 0", temporal
-
-        J1 = temporal[0]
-        J2 = temporal[1]
-        Meta = temporal[2]
-
-        self.Evento1(J1,J2)
-        self.Evento2(J1,J2)
-        self.Evento3(J1,J2)
-        self.Evento4(J1,J2)
-        self.Evento5(J1,J2)
-        self.Evento6(J1,J2)
-        #print("------Buscar la Meta -----")
-        temporal=self.cabeza
-        while temporal != None:
-            self.NodoSolucion = (temporal.verNodo())
-            respuesta = self.NodoSolucion[0] + self.NodoSolucion[1]
-            if respuesta == self.AMet:
-                #print "nodo Solucion ----- >", self.NodoSolucion
-                self.listarSolucion()
-                #self.listar()
-
-                exit()
+        while self.ban2 == 0:
+            if self.cabeza == None:
+                self.Insertar(self.LJ1, self.LJ2, self.AMet)
             else:
-                temporal= temporal.siguiente
+                self.padre= self.padre.siguiente
+                
+            #temporal=self.padre
+            #while temporal != None:
+                #temporal2 =temporal.verNodo()
+                #temporal= temporal.siguiente
+            temporal = self.padre.verNodo()
+            #print "El padre 0", temporal
 
-        self.CrearEstado()
-        #print("------No La Encontro hara mas hijos -----")
-        #temporal = self.padre.verNodo()
-        #print "El padre 1:", temporal
+            J1 = temporal[0]
+            J2 = temporal[1]
+            Meta = temporal[2]
 
-        #self.padre = self.padre.siguiente
-        #temporal = self.padre.verNodo()
-        #print "El padre 2:", temporal
+            self.Evento1(J1,J2)
+            self.Evento2(J1,J2)
+            self.Evento3(J1,J2)
+            self.Evento4(J1,J2)
+            self.Evento5(J1,J2)
+            self.Evento6(J1,J2)
+            #print("------Buscar la Meta -----")
+            temporal=self.cabeza
+            while temporal != None:
+                self.NodoSolucion = (temporal.verNodo())
+                respuesta = self.NodoSolucion[0] + self.NodoSolucion[1]
+                if respuesta == self.AMet:
+                    #print "nodo Solucion ----- >", self.NodoSolucion
+                    self.listarSolucion()
+                    #self.listar()
+                    #exit()
+                    self.ban2=1
+                    temporal = None
+                else:
+                    temporal= temporal.siguiente
+
+            self.CrearEstado()
+            #print("------No La Encontro hara mas hijos -----")
+            #temporal = self.padre.verNodo()
+            #print "El padre 1:", temporal
+            #self.padre = self.padre.siguiente
+            #temporal = self.padre.verNodo()
+            #print "El padre 2:", temporal
+        #else:
+        #    print "chao !!"
 
 J1 = 5 # capacidad que tiene  el jarro 1
-J2 = 3 # capacidad que tiene  el jarro 2
-Meta= 2 #Meta litros agua
+J2 = 4 # capacidad que tiene  el jarro 2
+Meta= 3 #Meta litros agua
 arb = Arbol(J1,J2,Meta)
 #arb.PrimerInsertar(J1,J2,Meta)
 arb.crearArbol()
